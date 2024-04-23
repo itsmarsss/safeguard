@@ -1,7 +1,35 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 import Dial from "./components/dial";
 
 function App() {
+  const [overallScore, setOverallScore] = useState<number>(0);
+  const [domainScore, setDomainScore] = useState<number>(0);
+  const [contentScore, setContentScore] = useState<number>(0);
+  const [seScore, setSeScore] = useState<number>(0);
+
+  useEffect(() => {
+    setInterval(() => {
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        if (tabs && tabs.length > 0 && tabs[0].id !== undefined) {
+          chrome.tabs.sendMessage(tabs[0].id, {}, function (response) {
+            if (response.scores) {
+              const { domainScore, contentScore, seScore } = response.scores;
+              setOverallScore(
+                0.15 * domainScore + 0.5 * contentScore + 0 * seScore
+              );
+              setDomainScore(domainScore);
+              setContentScore(contentScore);
+              setSeScore(seScore);
+            }
+          });
+        } else {
+          console.error("No active tab found.");
+        }
+      });
+    }, 1000);
+  }, []);
+
   return (
     <>
       <div className="navbar">
@@ -18,7 +46,7 @@ function App() {
             main={true}
             circle_color={"#f0f0f0"}
             progress_color={"#6a5acd"}
-            percentage={50}
+            percentage={overallScore}
             text={"Overall Score"}
           />
         </div>
@@ -28,7 +56,7 @@ function App() {
               main={false}
               circle_color={"#f0f0f0"}
               progress_color={"#40b5ad"}
-              percentage={60}
+              percentage={domainScore}
               text={"Prelim Check"}
             />
           </div>
@@ -37,7 +65,7 @@ function App() {
               main={false}
               circle_color={"#f0f0f0"}
               progress_color={"#ff69b4"}
-              percentage={70}
+              percentage={contentScore}
               text={"Content Check"}
             />
           </div>
@@ -46,7 +74,7 @@ function App() {
               main={false}
               circle_color={"#f0f0f0"}
               progress_color={"#4682b4"}
-              percentage={80}
+              percentage={seScore}
               text={"SE Ranking"}
             />
           </div>

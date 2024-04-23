@@ -43,9 +43,6 @@ const highTrustDomains = [
 ];
 
 function main(url, html) {
-
-    console.log(url, html);
-
     if (!url) {
         return {
             domainScore: 0,

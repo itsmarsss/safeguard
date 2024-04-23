@@ -1,3 +1,13 @@
+let scores = {
+    domainScore: 0,
+    contentScore: 0,
+    seScore: 0
+}
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    sendResponse({ scores });
+});
+
 const shadowContainer = document.createElement("div");
 const shadowRoot = shadowContainer.attachShadow({ mode: "open" });
 
@@ -97,11 +107,10 @@ setTimeout(() => {
 
     chrome.runtime.sendMessage({ html: html }, function (response) {
         if (response.message) {
-            const { domainScore, contentScore, seScore } = response.message;
+            scores = response.message;
+            const { domainScore, contentScore, seScore } = scores;
             const finalScore = 0.15 * domainScore + 0.5 * contentScore + 0 * seScore;
             const category = categorizeScore(finalScore);
-
-            console.log(finalScore, category);
 
             const endValue = finalScore;
 

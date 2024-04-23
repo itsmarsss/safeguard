@@ -70,7 +70,7 @@ const Dial: React.FC<DialProps> = (props) => {
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, []);
+  }, [percentage]);
 
   return (
     <>
