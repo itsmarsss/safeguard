@@ -26,8 +26,7 @@
     width: calc(var(--progress-bar-width) - 15px);
     height: calc(var(--progress-bar-height) - 15px);
     border-radius: 50%;
-    background-color: #3c3c43;
-
+    background: #3c3c43;
 }
 
 .main-dial .inner-circle {

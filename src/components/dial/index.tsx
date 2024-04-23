@@ -37,6 +37,8 @@ const Dial: React.FC<DialProps> = (props) => {
       const speed = 100;
       startValue += (deltaTime / 1000) * speed;
 
+      startValue = Math.min(startValue, endValue);
+
       if (progressValue) {
         progressValue.textContent = `${Math.floor(startValue)}%`;
         progressValue.style.color = `${progressColor}`;
