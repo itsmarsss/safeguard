@@ -6,5 +6,15 @@
   "action": {
     "default_popup": "js/index.html",
     "default_title": "SafeGuard"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["/scripts/contentScript.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "/scripts/background.js"
   }
 }
