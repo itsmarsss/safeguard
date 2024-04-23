@@ -1,0 +1,46 @@
+.dial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.circular-progress {
+    width: var(--progress-bar-width);
+    height: var(--progress-bar-height);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e2dbff;
+    margin-bottom: 10px;
+}
+
+.main-dial .circular-progress {
+    width: calc(var(--progress-bar-width) + 30px);
+    height: calc(var(--progress-bar-height) + 30px);
+}
+
+.inner-circle {
+    position: absolute;
+    width: calc(var(--progress-bar-width) - 15px);
+    height: calc(var(--progress-bar-height) - 15px);
+    border-radius: 50%;
+    background-color: #3c3c43;
+
+}
+
+.main-dial .inner-circle {
+    width: calc(var(--progress-bar-width) + 10px);
+    height: calc(var(--progress-bar-height) + 10px);
+}
+
+.percentage {
+    position: relative;
+    font-size: var(--font-size);
+    color: #fffdff;
+}
+
+.score-name {
+    font-weight: bold;
+}
