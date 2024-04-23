@@ -3,18 +3,21 @@ import "./App.css";
 import Dial from "./components/dial";
 
 function App() {
+  const [domain, setDomain] = useState<string>("Pending...");
   const [overallScore, setOverallScore] = useState<number>(0);
   const [domainScore, setDomainScore] = useState<number>(0);
   const [contentScore, setContentScore] = useState<number>(0);
   const [seScore, setSeScore] = useState<number>(0);
 
   useEffect(() => {
-    setInterval(() => {
+    const queryData = () => {
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         if (tabs && tabs.length > 0 && tabs[0].id !== undefined) {
           chrome.tabs.sendMessage(tabs[0].id, {}, function (response) {
-            if (response.scores) {
-              const { domainScore, contentScore, seScore } = response.scores;
+            if (response.data) {
+              const { domain, domainScore, contentScore, seScore } =
+                response.data;
+              setDomain(domain);
               setOverallScore(
                 0.15 * domainScore + 0.5 * contentScore + 0 * seScore
               );
@@ -27,7 +30,10 @@ function App() {
           console.error("No active tab found.");
         }
       });
-    }, 1000);
+    };
+
+    queryData();
+    setInterval(queryData, 1000);
   }, []);
 
   return (
@@ -38,7 +44,7 @@ function App() {
       </div>
       <div className="topbar">
         <b>Unleash the BullMeter!</b>
-        <span className="url-display">https://website.domain/</span>
+        <span className="url-display">{domain}</span>
       </div>
       <div className="checks">
         <div className="metacarpal-pad">

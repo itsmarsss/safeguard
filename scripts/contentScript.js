@@ -1,11 +1,12 @@
-let scores = {
+let data = {
+    domain: "Pending...",
     domainScore: 0,
     contentScore: 0,
     seScore: 0
 }
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    sendResponse({ scores });
+    sendResponse({ data });
 });
 
 const shadowContainer = document.createElement("div");
@@ -107,8 +108,11 @@ setTimeout(() => {
 
     chrome.runtime.sendMessage({ html: html }, function (response) {
         if (response.message) {
-            scores = response.message;
-            const { domainScore, contentScore, seScore } = scores;
+            data = {
+                domain: window.location.origin,
+                ...response.message
+            };
+            const { domainScore, contentScore, seScore } = data;
             const finalScore = 0.15 * domainScore + 0.5 * contentScore + 0 * seScore;
             const category = categorizeScore(finalScore);
 
