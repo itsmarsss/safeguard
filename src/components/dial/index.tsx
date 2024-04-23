@@ -21,14 +21,24 @@ const Dial: React.FC<DialProps> = (props) => {
     const innerCircle = circularRef.current?.querySelector(
       ".inner-circle"
     ) as HTMLElement;
-    let startValue = 0,
-      endValue = Number(circularRef.current?.getAttribute("data-percentage")),
-      speed = (100 - endValue) / 2,
-      progressColor = circularRef.current?.getAttribute("data-progress-color");
+    const endValue = Number(
+      circularRef.current?.getAttribute("data-percentage")
+    );
+    const progressColor = circularRef.current?.getAttribute(
+      "data-progress-color"
+    );
 
-    const progress = setInterval(() => {
+    let startValue = 0;
+    let lastTimestamp = performance.now();
+    let animationFrameId: number;
+
+    const animate = (timestamp: number) => {
+      const deltaTime = timestamp - lastTimestamp;
+      const speed = 100;
+      startValue += (deltaTime / 1000) * speed;
+
       if (progressValue) {
-        progressValue.textContent = `${startValue}%`;
+        progressValue.textContent = `${Math.floor(startValue)}%`;
         progressValue.style.color = `${progressColor}`;
       }
 
@@ -41,11 +51,23 @@ const Dial: React.FC<DialProps> = (props) => {
           startValue * 3.6
         }deg, #e2dbff 0deg)`;
       }
+
       if (startValue >= endValue) {
-        clearInterval(progress);
+        cancelAnimationFrame(animationFrameId);
+        return;
       }
-      startValue++;
-    }, speed);
+
+      animationFrameId = requestAnimationFrame(animate);
+      lastTimestamp = timestamp;
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, []);
 
   return (

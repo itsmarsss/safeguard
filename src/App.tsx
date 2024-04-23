@@ -17,7 +17,7 @@ function App() {
           <Dial
             main={true}
             circle_color={"#f0f0f0"}
-            progress_color={"SlateBlue"}
+            progress_color={"#6a5acd"}
             percentage={50}
             text={"Overall Score"}
           />
@@ -28,7 +28,7 @@ function App() {
               main={false}
               circle_color={"#f0f0f0"}
               progress_color={"#40b5ad"}
-              percentage={50}
+              percentage={60}
               text={"Prelim Check"}
             />
           </div>
@@ -36,8 +36,8 @@ function App() {
             <Dial
               main={false}
               circle_color={"#f0f0f0"}
-              progress_color={"hotpink"}
-              percentage={50}
+              progress_color={"#ff69b4"}
+              percentage={70}
               text={"Content Check"}
             />
           </div>
@@ -46,7 +46,7 @@ function App() {
               main={false}
               circle_color={"#f0f0f0"}
               progress_color={"#4682b4"}
-              percentage={50}
+              percentage={80}
               text={"SE Ranking"}
             />
           </div>
