@@ -26,6 +26,7 @@ style.textContent = `
     background: white;
     padding: 10px;
     box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.8);
+    z-index: 2147483647;
 }
 
 .safeguard::before {
@@ -62,7 +63,9 @@ style.textContent = `
     justify-content: center;
     align-items: center;
     background: #dad3f8;
-    margin-bottom: 10px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+    z-index: 2;
+    position: relative;
 }
 
 .inner-circle {
