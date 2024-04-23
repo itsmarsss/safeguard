@@ -39,7 +39,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  background-color: #070150;
+  background-color: #181039;
 }
 
 .topbar {
@@ -47,10 +47,17 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
-  padding-bottom: 10px;
+  gap: 5px;
+  padding: 10px 0;
   background: #6a5acd;
   border-bottom: 1px #393840 solid;
+}
+
+.url-display {
+  padding: 5px 8px;
+  background: #3831618f;
+  backdrop-filter: blur(5px);
+  border-radius: 5px;
 }
 
 .checks {
